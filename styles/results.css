@@ -1,0 +1,155 @@
+@font-face {
+    font-family: 'Sora';
+    src: url('../fonts/Sora-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+body {
+    background-color: #1C2430;
+    margin: auto;
+    padding: 15px;
+    border-radius: 10%;
+    font-family: 'Sora', sans-serif;
+    color: #FFFFFF;
+    width: 80%;
+}
+
+#generatedTests {
+    white-space: pre;
+    background-color: #222222;
+    color: #FFFFFF;
+    margin: 0;
+    font-size: 1rem;
+}
+
+#testIdeas {
+    font-size: 1rem;
+}
+
+#accessibility-check {
+    font-size: 1rem;
+}
+
+#accessibility-check a {
+    color: white;
+}
+
+#accessibility-check h3,
+#accessibility-check h4 {
+    margin: 0;
+    padding: 0;
+}
+
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+button {
+    background-color: #018B7D;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #2ABFAC;
+}
+
+button:disabled {
+    background-color: #878787;
+    cursor: default;
+}
+
+label {
+    border: 1px solid #1c2430;
+    padding: 2px;
+    margin: 0 0 5px;
+    display:block;
+    border-radius: 4px;
+}
+
+label:hover {
+    cursor:pointer;
+    border: 1px solid #018b7d;
+}
+
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    opacity: 0;
+    transition: opacity 0.5s, visibility 0.5s;
+    transform: translateX(-50%);
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.toast.error {
+    background-color: #e65454;
+}
+
+.toast.success {
+    background-color: #018B7D;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 150px;
+    background-color: #878787;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 130%;
+    left: 35%;
+    margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #878787 transparent;
+}
+
+.tooltip:disabled:hover .tooltiptext {
+    visibility: visible;
+}

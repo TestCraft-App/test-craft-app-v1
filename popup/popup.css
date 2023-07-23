@@ -1,0 +1,157 @@
+@font-face {
+    font-family: 'Sora';
+    src: url('../fonts/Sora-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+html,
+html * {
+    font-family: 'Sora', sans-serif !important;
+}
+
+body {
+    background-color: #1C2430;
+    margin: 0;
+    padding: 15px;
+    width: 300px;
+    border-radius: 10%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    margin: auto;
+    text-align: center;
+    background: linear-gradient(90deg, #0038FF 2.2%, #FFFFFF 88.39%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 5%;
+    font-weight: 900;
+}
+
+button {
+    background-color: #018B7D;
+    color: #FFFFFF;
+    padding: 4%;
+    display: block;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    margin: 5% auto;
+    width: 60%;
+    text-align: center;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2ABFAC;
+}
+
+button:disabled {
+    background-color: #878787;
+    cursor: default;
+}
+
+#automate-section {
+    padding-top: 0.5rem;
+}
+
+#generate-tests {
+    margin-top: 4% !important;
+}
+
+.toggles {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    padding: 0;
+    align-items: flex-start;
+}
+
+.toggles button {
+    outline: none;
+    text-align: center;
+    margin: 3px;
+    padding: 0.6rem 0.6rem;
+    flex: 1;
+    font-weight: 600;
+
+}
+
+.toggles button.disabled,
+.toggle {
+    background-color: #3F4A5E;
+    color: #1C2430;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.toggles label {
+    color: #FFFFFF;
+    margin-bottom: 5px;
+    padding-top: 0.3rem;
+}
+
+.label-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toggle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.section {
+    flex: 1;
+    margin: 5px;
+    width: 100%;
+}
+
+.toggles button.enabled {
+    background-color: #1C2430;
+    color: #FFFFFF;
+}
+
+.toggles button:hover {
+    color: #FFFFFF;
+}
+
+.full-width {
+    width: 100%;
+}
+
+#status {
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+}
+
+.ellipsis {
+    display: inline-block;
+    animation: ellipsis 1.5s steps(3, end) infinite;
+}
+
+@keyframes ellipsis {
+
+    0%,
+    100% {
+        text-indent: 0;
+    }
+
+    33% {
+        text-indent: -0.33em;
+    }
+
+    66% {
+        text-indent: -0.66em;
+    }
+}

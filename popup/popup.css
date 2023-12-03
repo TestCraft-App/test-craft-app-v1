@@ -60,19 +60,18 @@ button:disabled {
 
 #automate-section {
     padding-top: 0.5rem;
-}
-
-#generate-tests {
-    margin-top: 4% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Align children (sections) centrally */
+    width: 100%; /* Adjust as needed */
 }
 
 .toggles {
     display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin: auto;
+    justify-content: center; /* Center buttons within the toggle */
+    width: 100%; /* Take full width of the section */
     padding: 0;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .toggles button {
@@ -82,7 +81,6 @@ button:disabled {
     padding: 0.6rem 0.6rem;
     flex: 1;
     font-weight: 600;
-
 }
 
 .toggles button.disabled,
@@ -99,21 +97,9 @@ button:disabled {
     padding-top: 0.3rem;
 }
 
-.label-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .toggle {
     display: flex;
     justify-content: space-between;
-}
-
-.section {
-    flex: 1;
-    margin: 5px;
-    width: 100%;
 }
 
 .toggles button.enabled {
@@ -121,8 +107,33 @@ button:disabled {
     color: #FFFFFF;
 }
 
-.toggles button:hover {
+#framework button:hover {
     color: #FFFFFF;
+}
+
+button.available:hover {
+    color: #FFFFFF;
+}
+
+.section {
+    display: flex;
+    justify-content: center; /* Center contents of each section */
+    align-items: center; /* Vertically align contents */
+    margin: 5px;
+    width: auto; /* Adjust based on content or specify a fixed width */
+}
+
+#framework {
+    width: 90%; /* Example width, adjust as needed */
+    margin-bottom: 8px; /* Add bottom margin for separation */
+}
+
+#language {
+    width: 80%; /* Example width, adjust as needed */
+}
+
+#generate-tests {
+    margin-top: 4% !important;
 }
 
 .full-width {

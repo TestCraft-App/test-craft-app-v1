@@ -24,30 +24,25 @@
     </div>
 
     <div id="automate-section">
-        <div id="framework" class="toggles toggle">
-            <button id="cypress" class="enabled">Cypress</button>
-            <button id="playwright" class="disabled">Playwright</button>
+        <div class="toggles">
+            <div id="framework" class="section">
+                <div class="toggle full-width">
+                    <button id="playwright" class="disabled">Playwright</button>
+                    <button id="cypress" class="enabled">Cypress</button>
+                    <button id="selenium" class="disabled">Selenium</button>
+                </div>
+            </div>
         </div>
 
         <div class="toggles">
             <div id="language" class="section">
-                <div class="label-container">
-                    <label>Language</label>
                     <div class="toggle full-width">
-                        <button id="javascript" class="enabled">JS</button>
-                        <button id="typescript" class="disabled">TS</button>
+                        <button id="javascript" class="enabled available">JS</button>
+                        <button id="typescript" class="disabled available">TS</button>
+                        <button id="java" class="disabled available">Java</button>
+                        <button id="csharp" class="disabled available">C#</button>
+                        <button id="python" class="disabled available">Py</button>
                     </div>
-                </div>
-            </div>
-
-            <div id="pom" class="section">
-                <div class="label-container">
-                    <label>Page Objects</label>
-                    <div class="toggle full-width">
-                        <button id="pom-on" class="enabled">On</button>
-                        <button id="pom-off" class="disabled">Off</button>
-                    </div>
-                </div>
             </div>
         </div>
 

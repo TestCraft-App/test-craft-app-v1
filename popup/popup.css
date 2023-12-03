@@ -58,45 +58,8 @@ button:disabled {
     cursor: default;
 }
 
-#automate-section {
-    padding-top: 0.5rem;
-}
-
 #generate-tests {
     margin-top: 4% !important;
-}
-
-.toggles {
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin: auto;
-    padding: 0;
-    align-items: flex-start;
-}
-
-.toggles button {
-    outline: none;
-    text-align: center;
-    margin: 3px;
-    padding: 0.6rem 0.6rem;
-    flex: 1;
-    font-weight: 600;
-
-}
-
-.toggles button.disabled,
-.toggle {
-    background-color: #3F4A5E;
-    color: #1C2430;
-    border-radius: 0.5em;
-    cursor: pointer;
-}
-
-.toggles label {
-    color: #FFFFFF;
-    margin-bottom: 5px;
-    padding-top: 0.3rem;
 }
 
 .label-container {
@@ -105,24 +68,10 @@ button:disabled {
     align-items: center;
 }
 
-.toggle {
-    display: flex;
-    justify-content: space-between;
-}
-
 .section {
     flex: 1;
     margin: 5px;
     width: 100%;
-}
-
-.toggles button.enabled {
-    background-color: #1C2430;
-    color: #FFFFFF;
-}
-
-.toggles button:hover {
-    color: #FFFFFF;
 }
 
 .full-width {
@@ -154,4 +103,32 @@ button:disabled {
     66% {
         text-indent: -0.66em;
     }
+}
+
+/* SETTINGS */
+
+#settings-content select {
+    background-color: #3F4A5E;
+    color: #FFFFFF;
+    border-radius: 0.5em;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 1% auto;
+    padding: 0.6rem 0.6rem;
+    text-align: center;
+    display: block;
+}
+
+#settings-content label {
+    display: block;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+    padding-top: 0.3rem;
+    text-align: center;
+}
+
+#settings-content option {
+    text-align: center;
+    margin: auto;
+    padding: 0;
 }

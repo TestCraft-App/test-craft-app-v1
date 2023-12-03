@@ -75,8 +75,8 @@ async function readStream(response, feature, language = "") {
                     if (feature == FEATURE.GENERATE_TEST_IDEAS) {
                         let htmlContent = testIdeasTestsContainer.innerHTML;
                         for (let line of htmlContent.split("\n")) {
-                            if (line.includes(inputBox)){
-                                htmlContent = htmlContent.replace("<br />","").replace(line, `<label>${line}</label><br />`)
+                            if (line.includes(inputBox)) {
+                                htmlContent = htmlContent.replace("<br />", "").replace(line, `<label>${line}</label><br />`)
                             }
                         }
                         testIdeasTestsContainer.innerHTML = htmlContent;
@@ -125,7 +125,7 @@ async function readStream(response, feature, language = "") {
                                                 newContent = newContent.replace("- Suggested Tests", "<br />\n<h3>Suggested Tests</h3>");
                                                 accessibilityCheckContainer.innerHTML = newContent;
                                                 break;
-                                            default: 
+                                            default:
                                                 let data = cleanGeneratedCode(content, language);
                                                 codeBlock.className = `language-${language}`;
                                                 codeBlock.innerHTML += data;
@@ -173,7 +173,7 @@ async function showResult(feature) {
             };
             chrome.storage.local.remove([STORAGE.ELEMENT_PICKED]);
             break;
-        case ( FEATURE.AUTOMATE_TESTS): 
+        case (FEATURE.AUTOMATE_TESTS):
             URL = `${OPENAI_PROXY_BASE_URL}${ENDPOINTS.AUTOMATE_TESTS}`;
             data = await chrome.storage.local.get([
                 STORAGE.ELEMENT_SOURCE,

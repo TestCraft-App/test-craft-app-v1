@@ -1,5 +1,5 @@
-const OPENAI_PROXY_BASE_URL = 'https://openai-api-proxy-rtu664353a-uc.a.run.app'
-
+// const OPENAI_PROXY_BASE_URL = 'https://openai-api-proxy-rtu664353a-uc.a.run.app'
+const OPENAI_PROXY_BASE_URL = "http://127.0.0.1:5000"
 const STORAGE = {
     AUTOMATED_TESTS: 'automated-tests',
     ELEMENT_PICKED: 'element-picked',

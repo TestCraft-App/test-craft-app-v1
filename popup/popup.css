@@ -42,6 +42,13 @@ h1 {
 #settings-button img {
     height: 24px; /* Adjust as needed */
     width: auto; /* Maintain aspect ratio */
+    filter: grayscale(100%) brightness(70%);
+}
+
+#settings-button:hover img {
+    height: 24px; /* Adjust as needed */
+    width: auto; /* Maintain aspect ratio */
+    filter: grayscale(100%) brightness(100%);
 }
 
 button {
@@ -126,7 +133,11 @@ button:disabled {
     color: #FFFFFF;
 }
 
-#settings-content button.available:hover {
+#programming-language button.available:hover {
+    color: #FFFFFF;
+}
+
+#framework button:hover {
     color: #FFFFFF;
 }
 

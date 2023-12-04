@@ -13,16 +13,16 @@ const STORAGE = {
 };
 
 const LANGUAGE = {
-    CSHARP: { id: 'csharp', label: 'C#' },
-    JAVA: { id: 'java', label: 'Java' },
     JAVASCRIPT: { id: 'javascript', label: 'JS' },
     TYPESCRIPT: { id: 'typescript', label: 'TS' },
+    JAVA: { id: 'java', label: 'Java' },
+    CSHARP: { id: 'csharp', label: 'C#' },
     PYTHON: { id: 'python', label: 'py' },
 };
 
 const FRAMEWORK = {
-    CYPRESS: 'cypress',
     PLAYWRIGHT: 'playwright',
+    CYPRESS: 'cypress',
     SELENIUM: 'selenium',
 };
 

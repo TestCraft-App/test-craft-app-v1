@@ -28,9 +28,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function selectAndSaveLanguage(language) {
         chrome.storage.local.set({ [STORAGE.LANGUAGE_SELECTED]: language });
-        updateFrameworkOptions(language);
         markOptionSelected(language, 'language');
     }
+
+    Object.values(FRAMEWORK).forEach(function (framework) {
+        let button = document.createElement('button');
+        button.classList.add('disabled');
+        button.id = framework;
+        button.textContent = framework;
+        frameworkContainer.appendChild(button);
+
+        document.getElementById(framework).addEventListener('click', function () {
+            chrome.storage.local.set({ [STORAGE.FRAMEWORK_SELECTED]: this.id });
+            markOptionSelected(this.id, 'framework');
+            updateLanguageOptions(framework);
+        });
+    });
 
     Object.values(LANGUAGE).forEach(function (language) {
         let button = document.createElement('button');
@@ -45,46 +58,50 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    Object.values(FRAMEWORK).forEach(function (framework) {
-        let button = document.createElement('button');
-        button.classList.add('disabled');
-        button.id = framework;
-        button.textContent = framework;
-        frameworkContainer.appendChild(button);
-
-        document.getElementById(framework).addEventListener('click', function () {
-            chrome.storage.local.set({ [STORAGE.FRAMEWORK_SELECTED]: this.id });
-            markOptionSelected(this.id, 'framework');
-        });
-    });
-
-    function updateFrameworkOptions(language) {
+    function updateLanguageOptions(framework) {
         /**
-         * The mappping corresponds to the framework order:
-         * [cypress, playwright, selenium]
+         * The mappping corresponds to the language order:
+         * [JS, TS, Java, C#, Python]
          * 0 means disabled, 1 means enabled
          */
         const options = {
-            [LANGUAGE.CSHARP.id]: [0, 1, 1],
-            [LANGUAGE.JAVA.id]: [0, 1, 1],
-            [LANGUAGE.JAVASCRIPT.id]: [1, 1, 1],
-            [LANGUAGE.PYTHON.id]: [0, 1, 1],
-            [LANGUAGE.TYPESCRIPT.id]: [1, 1, 1],
+            [FRAMEWORK.CYPRESS]: [1, 1, 0, 0, 0],
+            [FRAMEWORK.PLAYWRIGHT]: [1, 1, 1, 1, 1],
+            [FRAMEWORK.SELENIUM]: [1, 1, 1, 1, 1],
         };
-        const frameworks = Object.values(FRAMEWORK);
-        const enabled = options[language];
+        const languages = Object.values(LANGUAGE).map((lang) => lang.id);
+        console.log(languages);
+        const enabled = options[framework];
 
-        for (let index = 0; index < frameworks.length; index++) {
-            const fmwButt = document.getElementById(frameworks[index]);
+        for (let index = 0; index < languages.length; index++) {
+            const languageButton = document.getElementById(languages[index]);
             if (enabled[index]) {
-                fmwButt.classList.add('available');
-                fmwButt.disabled = false;
+                languageButton.classList.add('available');
+                languageButton.disabled = false;
             } else {
-                fmwButt.classList.remove('available');
-                fmwButt.classList.remove('enabled');
-                fmwButt.classList.add('disabled');
-                fmwButt.disabled = true;
+                languageButton.classList.remove('available');
+                languageButton.classList.remove('enabled');
+                languageButton.classList.add('disabled');
+                languageButton.disabled = true;
             }
+        }
+
+        const buttons = document.querySelectorAll('#programming-language button');
+        let enabledButtonId = '';
+
+        for (const button of buttons) {
+            if (button.classList.contains('enabled')) {
+                enabledButtonId = button.id;
+                break;
+            }
+        }
+
+        if (
+            framework === FRAMEWORK.CYPRESS &&
+            enabledButtonId !== LANGUAGE.JAVASCRIPT.id &&
+            enabledButtonId !== LANGUAGE.TYPESCRIPT.id
+        ) {
+            selectAndSaveLanguage(LANGUAGE.JAVASCRIPT.id);
         }
     }
 
@@ -103,17 +120,18 @@ document.addEventListener('DOMContentLoaded', function () {
     chrome.storage.local.get(
         [STORAGE.LANGUAGE_SELECTED, STORAGE.FRAMEWORK_SELECTED, STORAGE.POM],
         (data) => {
-            console.log(data[STORAGE.LANGUAGE_SELECTED]);
+            console.log(data[STORAGE.FRAMEWORK_SELECTED]);
+            let framework = data[STORAGE.FRAMEWORK_SELECTED]
+                ? data[STORAGE.FRAMEWORK_SELECTED]
+                : FRAMEWORK.PLAYWRIGHT;
+            markOptionSelected(framework, 'framework');
+            updateLanguageOptions(framework);
+
             let language = data[STORAGE.LANGUAGE_SELECTED]
                 ? data[STORAGE.LANGUAGE_SELECTED]
                 : LANGUAGE.JAVASCRIPT.id;
+            console.log(language);
             markOptionSelected(language, 'language');
-            updateFrameworkOptions(language);
-
-            let framework = data[STORAGE.FRAMEWORK_SELECTED]
-                ? data[STORAGE.FRAMEWORK_SELECTED]
-                : FRAMEWORK.SELENIUM;
-            markOptionSelected(framework, 'framework');
         },
     );
 });

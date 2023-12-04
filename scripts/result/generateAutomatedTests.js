@@ -14,5 +14,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     showResult(FEATURE.AUTOMATE_TESTS);
-
 });

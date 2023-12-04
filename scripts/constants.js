@@ -1,5 +1,5 @@
 // const OPENAI_PROXY_BASE_URL = 'https://openai-api-proxy-rtu664353a-uc.a.run.app'
-const OPENAI_PROXY_BASE_URL = "http://127.0.0.1:5000"
+const OPENAI_PROXY_BASE_URL = 'http://127.0.0.1:5000';
 const STORAGE = {
     AUTOMATED_TESTS: 'automated-tests',
     ELEMENT_PICKED: 'element-picked',
@@ -9,29 +9,29 @@ const STORAGE = {
     LANGUAGE_SELECTED: 'selected-language',
     POM: 'pom',
     SITE_URL: 'site-url',
-    TEST_IDEAS: 'test-ideas'
+    TEST_IDEAS: 'test-ideas',
 };
 
 const LANGUAGE = {
-    CSHARP: 'C#',
-    JAVA: 'Java',
-    JAVASCRIPT: 'JavaScript',
-    PYTHON: 'Python',
-    TYPESCRIPT: 'TypeScript'
+    CSHARP: { id: 'csharp', label: 'C#' },
+    JAVA: { id: 'java', label: 'Java' },
+    JAVASCRIPT: { id: 'javascript', label: 'JS' },
+    TYPESCRIPT: { id: 'typescript', label: 'TS' },
+    PYTHON: { id: 'python', label: 'py' },
 };
 
 const FRAMEWORK = {
-    CYPRESS: 'Cypress',
-    PLAYWRIGHT: 'Playwright',
-    SELENIUM: 'Selenium'
-}
+    CYPRESS: 'cypress',
+    PLAYWRIGHT: 'playwright',
+    SELENIUM: 'selenium',
+};
 
 const ACTION = {
     ELEMENT_PICKED: 'element-picked',
     ELEMENT_SOURCE: 'element-source',
     HIGHLIGHT_ELEMENT: 'highlight-selected-element',
     START_PICKING: 'start-picking',
-    UNHIGHLIGHT_ELEMENT: 'unhighlight-selected-element'
+    UNHIGHLIGHT_ELEMENT: 'unhighlight-selected-element',
 };
 
 const MESSAGES = {
@@ -42,7 +42,7 @@ const MESSAGES = {
     GENERATING_TEST_IDEAS: 'Generating Test Ideas<span class="ellipsis">...</span>',
     GENERATING_TESTS: 'Generating Tests<span class="ellipsis">...</span>',
     SUCCESS: 'Success!',
-    TOO_LARGE: 'The element selected is too large, please try again with a smaller element.'
+    TOO_LARGE: 'The element selected is too large, please try again with a smaller element.',
 };
 
 const RESULT = {
@@ -55,14 +55,14 @@ const ENDPOINTS = {
     AUTOMATE_TESTS: '/api/automate-tests',
     CHECK_ACCESSIBILITY: '/api/check-accessibility',
     GENERATE_TEST_IDEAS: '/api/generate-ideas',
-    PING: '/api/ping'
+    PING: '/api/ping',
 };
 
 const FEATURE = {
     AUTOMATE_IDEAS: 'automate-ideas',
     AUTOMATE_TESTS: 'automated-tests',
     CHECK_ACCESSIBILITY: 'check-accessibility',
-    GENERATE_TEST_IDEAS: 'test-ideas'
+    GENERATE_TEST_IDEAS: 'test-ideas',
 };
 
 const automateBtn = document.getElementById('generate-tests');

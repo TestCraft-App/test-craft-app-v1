@@ -18,14 +18,8 @@ body {
     border-radius: 10%;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 h1 {
-    margin: auto;
+    margin: 0;
     text-align: center;
     background: linear-gradient(90deg, #0038FF 2.2%, #FFFFFF 88.39%);
     -webkit-background-clip: text;
@@ -33,6 +27,21 @@ h1 {
     background-clip: text;
     padding-bottom: 5%;
     font-weight: 900;
+}
+
+#settings-button {
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: min-content;
+}
+
+/* Style for the image inside the button */
+#settings-button img {
+    height: 24px; /* Adjust as needed */
+    width: auto; /* Maintain aspect ratio */
 }
 
 button {
@@ -58,24 +67,71 @@ button:disabled {
     cursor: default;
 }
 
-#generate-tests {
-    margin-top: 4% !important;
+#settings-content {
+    margin: 5% auto;
 }
 
-.label-container {
+#framework {
+    margin: 5% auto;
+    width: 90%;
+}
+
+#automate-section {
+    padding-top: 0.5rem;
     display: flex;
     flex-direction: column;
+    align-items: center; /* Align children (sections) centrally */
+    width: 100%; /* Adjust as needed */
+}
+
+.toggles {
+    display: flex;
+    justify-content: center; /* Center buttons within the toggle */
+    width: 100%; /* Take full width of the section */
     align-items: center;
+    margin: auto;
 }
 
-.section {
+.toggles button {
+    outline: none;
+    text-align: center;
+    margin: 3px;
+    padding: 0.6rem 0.6rem;
     flex: 1;
-    margin: 5px;
-    width: 100%;
+    font-weight: 600;
 }
 
-.full-width {
-    width: 100%;
+.toggles button.disabled,
+.toggle {
+    background-color: #3F4A5E;
+    color: #1C2430;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.toggles label {
+    color: #FFFFFF;
+    margin-bottom: 5px;
+    padding-top: 0.3rem;
+}
+
+.toggle {
+    display: flex;
+    justify-content: space-between;
+    padding: 1%;
+}
+
+.toggles button.enabled {
+    background-color: #1C2430;
+    color: #FFFFFF;
+}
+
+#settings-content button.available:hover {
+    color: #FFFFFF;
+}
+
+#generate-tests {
+    margin-top: 4% !important;
 }
 
 #status {
@@ -103,32 +159,4 @@ button:disabled {
     66% {
         text-indent: -0.66em;
     }
-}
-
-/* SETTINGS */
-
-#settings-content select {
-    background-color: #3F4A5E;
-    color: #FFFFFF;
-    border-radius: 0.5em;
-    cursor: pointer;
-    font-weight: 600;
-    margin: 1% auto;
-    padding: 0.6rem 0.6rem;
-    text-align: center;
-    display: block;
-}
-
-#settings-content label {
-    display: block;
-    color: #FFFFFF;
-    margin-bottom: 5px;
-    padding-top: 0.3rem;
-    text-align: center;
-}
-
-#settings-content option {
-    text-align: center;
-    margin: auto;
-    padding: 0;
 }

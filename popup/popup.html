@@ -4,18 +4,20 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body>
     <header>
+        <button id="settings-button">
+            <img src="../images/icons8-settings-100.png" alt="Settings" id="settings-image">
+        </button>
         <h1>TestCraft</h1>
     </header>
 
     <div id="main-content">
         <div id="main-controls">
-            <button id="settings">
-                <span>Settings</span>
-            </button>
+
             <button id="start-picking">
                 <span>Pick Element</span>
             </button>
@@ -32,23 +34,11 @@
         <div id="status" style="display:none;"></div>
     </div>
 
-    <div id="settings-content" style="display: none;">
-        <div id="select-container">
-
-            <div id="programming-language">
-                <label for="language-select">Language</label>
-                <select name="programming-language" id="language-select">
-                </select>
-            </div>
-
-            <div id="framework">
-                <label for="framework-select">Framework</label>
-                <select name="framework" id="framework-select">
-                </select>
-            </div>
-
+    <div id="settings-content" style="display: none;" class="toggles">
+        <div id="programming-language" class="toggle">
         </div>
-        <button id="back-button">Back</button>
+        <div id="framework" class="toggle">
+        </div>
     </div>
 
     </div>

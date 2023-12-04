@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     copyButton.addEventListener('click', async () => {
         try {
-            const selectedIdeas = createTestsButton.disabled ? testIdeasTestsContainer.textContent : getCheckedIdeas().join('\n');
+            const selectedIdeas = createTestsButton.disabled
+                ? testIdeasTestsContainer.textContent
+                : getCheckedIdeas().join('\n');
             await navigator.clipboard.writeText(selectedIdeas);
             showToast(RESULT.SUCCESS, MESSAGES.COPIED);
         } catch (err) {
@@ -20,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createTestsButton.addEventListener('click', async () => {
         try {
             await chrome.storage.local.set({ [STORAGE.IDEAS]: getCheckedIdeas() });
-            displayResultInNewWindow(chrome.runtime.getURL('pages/generatedTestsFromIdeas.html'))
+            displayResultInNewWindow(chrome.runtime.getURL('pages/generatedTestsFromIdeas.html'));
         } catch (err) {
             showToast(RESULT.ERROR, MESSAGES.FAILED);
         }
@@ -45,7 +47,7 @@ function finishIdeas() {
     });
 }
 
-function getCheckedIdeas(){
+function getCheckedIdeas() {
     const checkedIdeas = [];
     for (const idea of ideas) {
         if (idea.checked) {

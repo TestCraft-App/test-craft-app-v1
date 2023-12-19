@@ -9,7 +9,7 @@ toast.className = 'toast';
 toast.textContent = 'Element picked!';
 document.body.appendChild(toast);
 
-function showToast(type = "success") {
+function showToast(type = 'success') {
     toast.classList.add('show', type);
     setTimeout(() => {
         toast.classList.remove('show', type);
@@ -52,7 +52,9 @@ async function clickHandler(e) {
     stopPicking();
     hoveredElement.classList.remove('element-picker-hovered');
     source = hoveredElement.outerHTML;
-    await chrome.runtime.sendMessage({ action: 'element-picked', source });
+    var canvas = await html2canvas(hoveredElement);
+    var screenShot = canvas.toDataURL();
+    await chrome.runtime.sendMessage({ action: 'element-picked', source, screenShot });
     showToast();
 }
 

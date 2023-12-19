@@ -3,6 +3,7 @@ const OPENAI_PROXY_BASE_URL = 'http://127.0.0.1:5000';
 const STORAGE = {
     AUTOMATED_TESTS: 'automated-tests',
     ELEMENT_PICKED: 'element-picked',
+    ELEMENT_SCREENSHOT: 'element-screenshot',
     ELEMENT_SOURCE: 'selected-element',
     FRAMEWORK_SELECTED: 'selected-framework',
     IDEAS: 'ideas',
@@ -72,3 +73,5 @@ const generateTestIdeasBtn = document.getElementById('generate-test-ideas');
 const mainControls = document.getElementById('main-controls');
 const pickerBtn = document.getElementById('start-picking');
 const statusDescription = document.getElementById('status');
+const screenshotContainer = document.getElementById('screenshot-container');
+const screenShotImage = document.getElementById('screenshot-image');

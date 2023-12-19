@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.local.get([
             STORAGE.ELEMENT_PICKED,
             STORAGE.SITE_URL,
+            STORAGE.ELEMENT_SCREENSHOT
         ], data => {
 
             if (!data[STORAGE.SITE_URL] || data[STORAGE.SITE_URL] !== currentTabUrl) {
@@ -27,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 automateBtn.disabled = true;
                 generateTestIdeasBtn.disabled = true;
                 checkAccessibilityBtn.disabled = true;
+            }
+
+            if(data[STORAGE.ELEMENT_SCREENSHOT]) {
+                debugger;
+                screenShotImage.src = data[STORAGE.ELEMENT_SCREENSHOT];
+                screenshotContainer.style.display = 'block';
             }
         });
     });

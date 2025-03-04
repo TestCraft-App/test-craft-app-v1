@@ -77,7 +77,10 @@ async function readStream(response, feature, language = '') {
                             if (line.includes(inputBox)) {
                                 htmlContent = htmlContent
                                     .replace('<br />', '')
-                                    .replace(line, `<label class="test-idea"> <span class="test-idea-text">${line}</span> <button class="edit-btn"><span class="material-icons"></span></button> </label><br />`);
+                                    .replace(
+                                        line,
+                                        `<label class="test-idea"> <span class="test-idea-text">${line}</span> <button class="edit-btn"><span class="material-icons"></span></button> </label><br />`,
+                                    );
                             }
                         }
                         testIdeasTestsContainer.innerHTML = htmlContent;

@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const customServerUrl = data[STORAGE.CUSTOM_SERVER_URL];
     const BASE_URL = !!customServerUrl ? customServerUrl : OPENAI_PROXY_BASE_URL;
 
-    // Function to check if content script is loaded
     async function isContentScriptLoaded() {
         try {
             const queryOptions = { active: true, currentWindow: true };
@@ -37,7 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Check if content script is loaded
     const contentScriptLoaded = await isContentScriptLoaded();
     if (!contentScriptLoaded) {
         statusDescription.textContent = 'Warning: Content script may not be loaded. Try refreshing the page.';
@@ -85,7 +83,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     pickerBtn.addEventListener('click', async () => {
-        // Check if content script is loaded before sending message
         const contentScriptLoaded = await isContentScriptLoaded();
         if (!contentScriptLoaded) {
             statusDescription.textContent = 'Error: Content script not ready. Please refresh the page and try again.';
@@ -104,7 +101,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     pickerBtn.addEventListener('mouseenter', async () => {
-        // Check if content script is loaded before sending message
         const contentScriptLoaded = await isContentScriptLoaded();
         if (!contentScriptLoaded) {
             return; // Silently fail for hover events
@@ -120,7 +116,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     pickerBtn.addEventListener('mouseleave', async () => {
-        // Check if content script is loaded before sending message
         const contentScriptLoaded = await isContentScriptLoaded();
         if (!contentScriptLoaded) {
             return; // Silently fail for hover events

@@ -13,19 +13,16 @@ html * {
 body {
     background-color: #1C2430;
     margin: 0;
-    padding: 15px;
+    /* padding: 15px; */
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
     width: 300px;
     border-radius: 10%;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 h1 {
-    margin: auto;
+    margin: 0;
     text-align: center;
     background: linear-gradient(90deg, #0038FF 2.2%, #FFFFFF 88.39%);
     -webkit-background-clip: text;
@@ -33,6 +30,27 @@ h1 {
     background-clip: text;
     padding-bottom: 5%;
     font-weight: 900;
+}
+
+#settings-button {
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: min-content;
+}
+
+#settings-button img {
+    height: 24px;
+    width: auto;
+    filter: grayscale(100%) brightness(70%);
+}
+
+#settings-button:hover img {
+    height: 24px;
+    width: auto;
+    filter: grayscale(100%) brightness(100%);
 }
 
 button {
@@ -43,7 +61,7 @@ button {
     border: none;
     border-radius: 4px;
     font-weight: 700;
-    margin: 5% auto;
+    margin: 3% auto;
     width: 60%;
     text-align: center;
     cursor: pointer;
@@ -58,21 +76,37 @@ button:disabled {
     cursor: default;
 }
 
-#automate-section {
-    padding-top: 0.5rem;
+h3 {
+    color: #FFFFFF;
+    font-weight: 600;
+    text-align: center;
+    filter: grayscale(100%) brightness(80%);
 }
 
-#generate-tests {
-    margin-top: 4% !important;
+#main-content,
+#settings-content {
+    margin: 5% auto;
+}
+
+#framework {
+    margin: 6px auto;
+    width: 90%;
+}
+
+#automate-section {
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .toggles {
     display: flex;
-    justify-content: space-between;
-    width: 80%;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
     margin: auto;
-    padding: 0;
-    align-items: flex-start;
 }
 
 .toggles button {
@@ -82,12 +116,11 @@ button:disabled {
     padding: 0.6rem 0.6rem;
     flex: 1;
     font-weight: 600;
-
 }
 
 .toggles button.disabled,
 .toggle {
-    background-color: #3F4A5E;
+    background-color: #5b6a85;
     color: #1C2430;
     border-radius: 0.5em;
     cursor: pointer;
@@ -99,21 +132,10 @@ button:disabled {
     padding-top: 0.3rem;
 }
 
-.label-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .toggle {
     display: flex;
     justify-content: space-between;
-}
-
-.section {
-    flex: 1;
-    margin: 5px;
-    width: 100%;
+    padding: 1%;
 }
 
 .toggles button.enabled {
@@ -121,24 +143,119 @@ button:disabled {
     color: #FFFFFF;
 }
 
-.toggles button:hover {
+#programming-language button.available:hover {
     color: #FFFFFF;
 }
 
-.full-width {
-    width: 100%;
+#framework button:hover {
+    color: #FFFFFF;
 }
 
-#status {
+#status,
+#optional-settings-status {
     color: #FFFFFF;
     text-align: center;
     font-weight: bold;
+    height: 15px;
+}
+
+#optional-settings-status {
+    margin-top: 7px;
 }
 
 .ellipsis {
     display: inline-block;
     animation: ellipsis 1.5s steps(3, end) infinite;
 }
+
+#screenshot-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 9rem;
+}
+
+#screenshot-image {
+    display: block;
+    margin: auto;
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+}
+
+#optional-settings {
+    margin: 5% auto;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
+
+#optional-settings input,
+#openai-models {
+    color: #1C2430;
+    background-color: #8fa3c5;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 600;
+    transition: border-color 0.3s ease;
+    margin: 3px;
+    padding: 0.6rem 0.6rem;
+}
+
+#openai-models {
+    text-align: justify;
+    text-align-last: center;
+    -moz-text-align-last: center;
+}
+
+#optional-settings input:disabled {
+    background-color: #5b6a85;
+    color: #878787;
+}
+
+#optional-settings input:focus {
+    border-color: #FFFFFF;
+    outline: none;
+    color: #FFFFFF;
+    background-color: #1C2430;
+}
+
+#optional-settings input:hover {
+    color: #FFFFFF;
+}
+
+#optional-settings input::placeholder {
+    color: #1C2430;
+    font-weight: 500;
+    font-style: italic;
+    text-align: left;
+}
+
+.setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.setting input{
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.setting select {
+    width: 259px;
+    margin-right: 10px;
+}
+
+.info-icon {
+    width: 20px; 
+    height: 20px;
+    align-self: center;
+}
+
 
 @keyframes ellipsis {
 

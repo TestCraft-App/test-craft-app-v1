@@ -1,11 +1,11 @@
 function updateControls(message) {
     statusDescription.innerHTML = message;
     statusDescription.style.display = 'block';
-    automateBtn.disabled = true;
     pickerBtn.disabled = true;
+    automateBtn.disabled = true;
     generateTestIdeasBtn.disabled = true;
     checkAccessibilityBtn.disabled = true;
-};
+}
 
 generateTestIdeasBtn.addEventListener('click', () => {
     updateControls(MESSAGES.GENERATING_TEST_IDEAS);

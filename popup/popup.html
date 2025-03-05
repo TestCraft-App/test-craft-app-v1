@@ -4,64 +4,78 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body>
     <header>
+        <button id="settings-button">
+            <img src="../images/icons8-settings-100.png" alt="Settings" id="settings-image">
+        </button>
         <h1>TestCraft</h1>
     </header>
 
-    <div id="main-controls">
-        <button id="start-picking">
-            <span>Pick Element</span>
-        </button>
-        <button id="generate-test-ideas" disabled>
-            <span>Generate Test Ideas</span>
-        </button>
-        <button id="check-accessibility" disabled>
-            <span>Check Accessibility</span>
-        </button>
+    <div id="main-content">
+        <div id="main-controls">
+            <button id="start-picking">
+                <span>Pick Element</span>
+            </button>
+            <div id="screenshot-container">
+                <img id="screenshot-image" src="./../images/screenshot-placeholder.jpg" alt="Screenshot" width="100%">
+              </div>
+            <button id="generate-test-ideas" disabled>
+                <span>Generate Test Ideas</span>
+            </button>
+            <button id="generate-tests" disabled>
+                <span>Automate</span>
+            </button>
+            <button id="check-accessibility" disabled>
+                <span>Check Accessibility</span>
+            </button>
+        </div>
+        <div id="status"></div>
     </div>
 
-    <div id="automate-section">
-        <div id="framework" class="toggles toggle">
-            <button id="cypress" class="enabled">Cypress</button>
-            <button id="playwright" class="disabled">Playwright</button>
+    <div id="settings-content" style="display: none;" class="toggles">
+        <h3>Automation Settings</h3>
+        <div id="framework" class="toggle">
         </div>
-
-        <div class="toggles">
-            <div id="language" class="section">
-                <div class="label-container">
-                    <label>Language</label>
-                    <div class="toggle full-width">
-                        <button id="javascript" class="enabled">JS</button>
-                        <button id="typescript" class="disabled">TS</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="pom" class="section">
-                <div class="label-container">
-                    <label>Page Objects</label>
-                    <div class="toggle full-width">
-                        <button id="pom-on" class="enabled">On</button>
-                        <button id="pom-off" class="disabled">Off</button>
-                    </div>
-                </div>
-            </div>
+        <div id="programming-language" class="toggle">
         </div>
-
-        <button id="generate-tests" disabled>
-            <span>Automate</span>
-        </button>
+        <h3>API Settings</h3>
+        <div id="optional-settings">
+            <div class="setting">
+                <input type="password" id="openai-api-key" placeholder="Your OpenAI API key" title="Your OpenAI API key">
+                <a href="https://platform.openai.com/docs/api-reference/authentication" target="_blank" class="info-link" title="Learn more about the OpenAI API key">
+                    <img src="./../images/info-icon.png" alt="Info" class="info-icon">
+                </a>
+            </div>
+            <div class="setting">
+                <input type="text" id="custom-server-url" placeholder="Your server URL" title="Your server URL">
+                <a href="https://github.com/TestCraft-App/test-craft-api-v1?tab=readme-ov-file#testcraft-api" target="_blank" class="info-link" title="Learn how to setup your server">
+                    <img src="./../images/info-icon.png" alt="Info" class="info-icon">
+                </a>
+            </div>
+            <div class="setting">
+                <select id="openai-models" title="Select Your Model">
+                    <option value="">Select a Model</option>
+                </select>
+                <a href="https://github.com/TestCraft-App/test-craft-app-v1?tab=readme-ov-file#select-your-model" target="_blank" class="info-link" title="Learn how to enable model selection">
+                    <img src="./../images/info-icon.png" alt="Info" class="info-icon">
+                </a>
+            </div>
+            <div id="optional-settings-status"></div>
+        </div>
+        
     </div>
+    
 
-    <div id="status" style="display:none;"></div>
+    </div>
 
     <script src="../scripts/constants.js"></script>
-    <script src="../scripts/pickElement.js"></script>
     <script src="../scripts/utils.js"></script>
     <script src="../scripts/generate.js"></script>
+    <script src="settings.js"></script>
     <script src="popup.js"></script>
 
 </body>

@@ -1,80 +1,68 @@
-function enableButton(button) {
-    button.classList.add('enabled');
-    button.classList.remove('disabled');
-};
+document.addEventListener('DOMContentLoaded', async () => {
+    const data = await chrome.storage.local.get([STORAGE.CUSTOM_SERVER_URL]);
+    const customServerUrl = data[STORAGE.CUSTOM_SERVER_URL];
+    const BASE_URL = !!customServerUrl ? customServerUrl : OPENAI_PROXY_BASE_URL;
 
-function disableButton(button) {
-    button.classList.add('disabled');
-    button.classList.remove('enabled');
-};
+    async function isContentScriptLoaded() {
+        try {
+            const queryOptions = { active: true, currentWindow: true };
+            const tabs = await chrome.tabs.query(queryOptions);
 
-function pickOption(option) {
-    let enable, disable;
+            if (!tabs || tabs.length === 0) {
+                console.error('No active tab found');
+                return false;
+            }
 
-    switch (option) {
-        case 'javascript':
-            enable = javascriptBtn;
-            disable = typescriptBtn;
-            break;
-
-        case 'typescript':
-            enable = typescriptBtn;
-            disable = javascriptBtn;
-            break;
-
-        case 'cypress':
-            enable = cypressBtn;
-            disable = playwrightBtn;
-            break;
-
-        case 'playwright':
-            enable = playwrightBtn;
-            disable = cypressBtn;
-            break;
-
-        case 'pom-on':
-            enable = pomOnBtn;
-            disable = pomOffBtn;
-            break;
-
-        case 'pom-off':
-            enable = pomOffBtn;
-            disable = pomOnBtn;
-            break;
-
-        default:
-            break;
+            return new Promise((resolve) => {
+                try {
+                    chrome.tabs.sendMessage(tabs[0].id, { action: 'ping' }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.error('Error sending ping:', chrome.runtime.lastError);
+                            resolve(false);
+                        } else if (response && response.status === 'ready') {
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error sending ping:', error);
+                    resolve(false);
+                }
+            });
+        } catch (error) {
+            console.error('Error checking content script:', error);
+            return false;
+        }
     }
 
-    enableButton(enable);
-    disableButton(disable);
-}
+    const contentScriptLoaded = await isContentScriptLoaded();
+    if (!contentScriptLoaded) {
+        statusDescription.textContent = 'Warning: Content script may not be loaded. Try refreshing the page.';
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
+    //TODO: try catch
+    fetch(`${BASE_URL}${ENDPOINTS.PING}`).then((res) => {
+        if (res.status !== 200) {
+            statusDescription.textContent = MESSAGES.FAILED;
+        }
+    });
+
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        const payload = { ping: true };
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        };
-        fetch(`${OPENAI_PROXY_BASE_URL}${ENDPOINTS.GENERATE_TEST_IDEAS}`, options).then(() => { });
-
         const currentTabUrl = tabs[0].url;
-
-        chrome.storage.local.get([
-            STORAGE.ELEMENT_PICKED,
-            STORAGE.SITE_URL,
-            STORAGE.LANGUAGE_SELECTED,
-            STORAGE.FRAMEWORK_SELECTED,
-            STORAGE.POM
-        ], data => {
-
+        chrome.storage.local.get([STORAGE.ELEMENT_PICKED, STORAGE.SITE_URL, STORAGE.ELEMENT_SCREENSHOT], (data) => {
             if (!data[STORAGE.SITE_URL] || data[STORAGE.SITE_URL] !== currentTabUrl) {
-                chrome.storage.local.remove([STORAGE.ELEMENT_PICKED, STORAGE.ELEMENT_SOURCE]);
-                chrome.storage.local.set({ [STORAGE.SITE_URL]: currentTabUrl });
+                chrome.storage.local.remove(
+                    [STORAGE.ELEMENT_PICKED, STORAGE.ELEMENT_SOURCE, STORAGE.ELEMENT_SCREENSHOT],
+                    () => {
+                        chrome.storage.local.set({ [STORAGE.SITE_URL]: currentTabUrl }, () => {
+                            screenShotImage.src = './../images/screenshot-placeholder.jpg';
+                        });
+                        automateBtn.disabled = true;
+                        generateTestIdeasBtn.disabled = true;
+                        checkAccessibilityBtn.disabled = true;
+                    },
+                );
             }
 
             if (data[STORAGE.ELEMENT_PICKED]) {
@@ -87,70 +75,76 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkAccessibilityBtn.disabled = true;
             }
 
-            if (data[STORAGE.FRAMEWORK_SELECTED]) {
-                pickOption(data[STORAGE.FRAMEWORK_SELECTED]);
-            } else {
-                pickOption(OPTION.CYPRESS);
-                chrome.storage.local.set({ [STORAGE.FRAMEWORK_SELECTED]: OPTION.CYPRESS });
+            if (data[STORAGE.ELEMENT_SCREENSHOT]) {
+                debugger;
+                screenShotImage.src = data[STORAGE.ELEMENT_SCREENSHOT];
             }
+        });
+    });
 
-            if (data[STORAGE.LANGUAGE_SELECTED]) {
-                pickOption(data[STORAGE.LANGUAGE_SELECTED]);
-            } else {
-                pickOption(OPTION.JAVASCRIPT);
-                chrome.storage.local.set({ [STORAGE.LANGUAGE_SELECTED]: OPTION.JAVASCRIPT });
+    pickerBtn.addEventListener('click', async () => {
+        const contentScriptLoaded = await isContentScriptLoaded();
+        if (!contentScriptLoaded) {
+            statusDescription.textContent = 'Error: Content script not ready. Please refresh the page and try again.';
+            return;
+        }
+
+        const queryOptions = { active: true, currentWindow: true };
+        const tabs = await chrome.tabs.query(queryOptions);
+        try {
+            await chrome.tabs.sendMessage(tabs[0].id, { action: ACTION.START_PICKING });
+            window.close();
+        } catch (error) {
+            console.error('Error sending message:', error);
+            statusDescription.textContent = 'Error: Content script not ready. Please refresh the page and try again.';
+        }
+    });
+
+    pickerBtn.addEventListener('mouseenter', async () => {
+        const contentScriptLoaded = await isContentScriptLoaded();
+        if (!contentScriptLoaded) {
+            return; // Silently fail for hover events
+        }
+
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            try {
+                chrome.tabs.sendMessage(tabs[0].id, { action: ACTION.HIGHLIGHT_ELEMENT });
+            } catch (error) {
+                console.error('Error sending message:', error);
             }
+        });
+    });
 
-            if (data[STORAGE.POM]) {
-                pickOption('pom-on');
-            } else {
-                pickOption('pom-off');
-                chrome.storage.local.set({ [STORAGE.POM]: false });
+    pickerBtn.addEventListener('mouseleave', async () => {
+        const contentScriptLoaded = await isContentScriptLoaded();
+        if (!contentScriptLoaded) {
+            return; // Silently fail for hover events
+        }
+
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            try {
+                chrome.tabs.sendMessage(tabs[0].id, { action: ACTION.UNHIGHLIGHT_ELEMENT });
+            } catch (error) {
+                console.error('Error sending message:', error);
             }
         });
     });
 });
 
-cypressBtn.addEventListener('click', () => {
-    pickOption(OPTION.CYPRESS)
-    chrome.storage.local.set({ [STORAGE.FRAMEWORK_SELECTED]: OPTION.CYPRESS });
-});
-
-playwrightBtn.addEventListener('click', () => {
-    pickOption(OPTION.PLAYWRIGHT);
-    chrome.storage.local.set({ [STORAGE.FRAMEWORK_SELECTED]: OPTION.PLAYWRIGHT });
-});
-
-javascriptBtn.addEventListener('click', () => {
-    pickOption(OPTION.JAVASCRIPT);
-    chrome.storage.local.set({ [STORAGE.LANGUAGE_SELECTED]: OPTION.JAVASCRIPT });
-});
-
-typescriptBtn.addEventListener('click', () => {
-    pickOption(OPTION.TYPESCRIPT)
-    chrome.storage.local.set({ [STORAGE.LANGUAGE_SELECTED]: OPTION.TYPESCRIPT });
-});
-
-pomOnBtn.addEventListener('click', () => {
-    pickOption('pom-on')
-    chrome.storage.local.set({ [STORAGE.POM]: true });
-});
-
-pomOffBtn.addEventListener('click', () => {
-    pickOption('pom-off')
-    chrome.storage.local.set({ [STORAGE.POM]: false });
-});
-
 // Update message and enable picker
-chrome.runtime.onMessage.addListener(
-    function (request, sender, sendResponse) {
-        if (request.source === "stream" && request.status == "finished") {
-            pickerBtn.disabled = false;
-            statusDescription.textContent = MESSAGES.SUCCESS;
-        }
-        else if (request.source === "stream" && request.status == "error") {
-            pickerBtn.disabled = false;
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.source === 'stream' && request.status == 'finished') {
+        pickerBtn.disabled = false;
+        automateBtn.disabled = false;
+        generateTestIdeasBtn.disabled = false;
+        checkAccessibilityBtn.disabled = false;
+        statusDescription.textContent = MESSAGES.SUCCESS;
+    } else if (request.source === 'stream' && request.status == 'error') {
+        pickerBtn.disabled = false;
+        if (!!request.message) {
+            statusDescription.textContent = MESSAGES[request.message];
+        } else {
             statusDescription.textContent = MESSAGES.FAILED;
         }
     }
-);
+});

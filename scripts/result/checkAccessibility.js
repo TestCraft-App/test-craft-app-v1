@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const accessibilityCheckContainer = document.getElementById('accessibility-check');
     const copyButton = document.getElementById('copyButton');

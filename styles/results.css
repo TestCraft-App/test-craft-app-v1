@@ -78,14 +78,25 @@ button:disabled {
 }
 
 label {
-    border: 1px solid #1c2430;
-    padding: 2px;
-    margin: 0 0 5px;
-    display:block;
+    align-items: center;
     border-radius: 4px;
+    display:flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
-label:hover {
+span.test-idea-text {
+    width: 100%;
+    border: 1px solid #1c2430;
+}
+
+label.test-idea {
+    border: 1px solid #1c2430;
+}
+
+label.test-idea:hover {
     cursor:pointer;
     border: 1px solid #018b7d;
 }
@@ -152,4 +163,26 @@ label:hover {
 
 .tooltip:disabled:hover .tooltiptext {
     visibility: visible;
+}
+
+button.edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0 0 0 1.5em;
+    z-index: 10;
+}
+
+.material-icons:before {
+    content: "edit";
+    font-size: 22px;
+}
+
+.editing-idea {
+    width: 100%;
+    background-color: inherit;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
 }

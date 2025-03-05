@@ -1,3 +1,5 @@
+console.log('TestCraft content script loaded');
+
 let picking = false;
 let hoveredElement;
 let sourceCode;
@@ -72,8 +74,12 @@ async function clickHandler(e) {
     showToast();
 }
 
-chrome.runtime.onMessage.addListener((request) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     switch (request.action) {
+        case 'ping':
+            // Respond to ping to confirm content script is loaded
+            sendResponse({ status: 'ready' });
+            break;
         case 'start-picking':
             startPicking();
             break;
@@ -90,4 +96,6 @@ chrome.runtime.onMessage.addListener((request) => {
         default:
             break;
     }
+    // Return true to indicate we'll respond asynchronously
+    return true;
 });

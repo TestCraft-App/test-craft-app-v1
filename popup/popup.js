@@ -3,6 +3,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     const customServerUrl = data[STORAGE.CUSTOM_SERVER_URL];
     const BASE_URL = !!customServerUrl ? customServerUrl : OPENAI_PROXY_BASE_URL;
 
+    async function isContentScriptLoaded() {
+        try {
+            const queryOptions = { active: true, currentWindow: true };
+            const tabs = await chrome.tabs.query(queryOptions);
+
+            if (!tabs || tabs.length === 0) {
+                console.error('No active tab found');
+                return false;
+            }
+
+            return new Promise((resolve) => {
+                try {
+                    chrome.tabs.sendMessage(tabs[0].id, { action: 'ping' }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.error('Error sending ping:', chrome.runtime.lastError);
+                            resolve(false);
+                        } else if (response && response.status === 'ready') {
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error sending ping:', error);
+                    resolve(false);
+                }
+            });
+        } catch (error) {
+            console.error('Error checking content script:', error);
+            return false;
+        }
+    }
+
+    const contentScriptLoaded = await isContentScriptLoaded();
+    if (!contentScriptLoaded) {
+        statusDescription.textContent = 'Warning: Content script may not be loaded. Try refreshing the page.';
+    }
+
     //TODO: try catch
     fetch(`${BASE_URL}${ENDPOINTS.PING}`).then((res) => {
         if (res.status !== 200) {
@@ -45,21 +83,50 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     pickerBtn.addEventListener('click', async () => {
+        const contentScriptLoaded = await isContentScriptLoaded();
+        if (!contentScriptLoaded) {
+            statusDescription.textContent = 'Error: Content script not ready. Please refresh the page and try again.';
+            return;
+        }
+
         const queryOptions = { active: true, currentWindow: true };
         const tabs = await chrome.tabs.query(queryOptions);
-        await chrome.tabs.sendMessage(tabs[0].id, { action: ACTION.START_PICKING });
-        window.close();
+        try {
+            await chrome.tabs.sendMessage(tabs[0].id, { action: ACTION.START_PICKING });
+            window.close();
+        } catch (error) {
+            console.error('Error sending message:', error);
+            statusDescription.textContent = 'Error: Content script not ready. Please refresh the page and try again.';
+        }
     });
 
-    pickerBtn.addEventListener('mouseenter', () => {
+    pickerBtn.addEventListener('mouseenter', async () => {
+        const contentScriptLoaded = await isContentScriptLoaded();
+        if (!contentScriptLoaded) {
+            return; // Silently fail for hover events
+        }
+
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id, { action: ACTION.HIGHLIGHT_ELEMENT });
+            try {
+                chrome.tabs.sendMessage(tabs[0].id, { action: ACTION.HIGHLIGHT_ELEMENT });
+            } catch (error) {
+                console.error('Error sending message:', error);
+            }
         });
     });
 
-    pickerBtn.addEventListener('mouseleave', () => {
+    pickerBtn.addEventListener('mouseleave', async () => {
+        const contentScriptLoaded = await isContentScriptLoaded();
+        if (!contentScriptLoaded) {
+            return; // Silently fail for hover events
+        }
+
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id, { action: ACTION.UNHIGHLIGHT_ELEMENT });
+            try {
+                chrome.tabs.sendMessage(tabs[0].id, { action: ACTION.UNHIGHLIGHT_ELEMENT });
+            } catch (error) {
+                console.error('Error sending message:', error);
+            }
         });
     });
 });

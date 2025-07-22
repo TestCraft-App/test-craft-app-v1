@@ -98,8 +98,11 @@ async function readStream(response, feature, language = '') {
                     if (line.includes('[DONE]')) {
                         await chrome.runtime.sendMessage({ source: 'stream', status: 'finished' });
                     } else {
-                        if (line.startsWith('data')) {
-                            const possibleJSON = line.slice(6);
+                        if (line.startsWith('data') || isCompleteJSON(line)) {
+                            let possibleJSON = line;
+                            if (line.startsWith('data')) {
+                                possibleJSON = line.slice(6);
+                            }
                             if (isCompleteJSON(possibleJSON)) {
                                 const json = JSON.parse(possibleJSON);
                                 if (json.choices[0].finish_reason != null) {
